@@ -24,7 +24,7 @@ function Home() {
         sx={{ minHeight: "100vh" }}
       >
         <Navbar />
-        <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Stack direction="row" spacing={{sm:6}} justifyContent="space-between">
           <Sidebar setMode={setMode} mode={mode} />
           <Feed />
           <Rightbar />

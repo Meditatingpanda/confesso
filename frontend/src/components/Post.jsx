@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 const Post = () => {
   return (
-    <Card>
+    <Card sx={{mb:4,mt:2}}>
       <CardHeader
         avatar={
           <Avatar

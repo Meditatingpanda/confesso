@@ -34,7 +34,7 @@ function Login() {
             >
               <Box>
                 <Typography variant="h1">Confesso</Typography>
-                <Typography variant="body1">
+                <Typography sx={{ml:1.4}} variant="body1">
                   Let your Imposter Syndrome come from your brain
                 </Typography>
               </Box>
