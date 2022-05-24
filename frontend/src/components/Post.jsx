@@ -12,7 +12,10 @@ import {
 } from "@mui/material";
 const Post = () => {
   return (
-    <Card sx={{ margin: 5 }}>
+    <Card sx={{ margin:{
+        xs:2,
+        sm:5
+    } }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
