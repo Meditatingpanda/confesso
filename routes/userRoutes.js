@@ -55,23 +55,72 @@ router.delete(
 );
 
 //get a user by id
-router.get('/:id',asyncHandler(async(req,res)=>{
-    const user=await User.findById(req.params.id);
-    if(!user){
-      res.status(400)
-      throw new Error('user not found');
+router.get(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.status(400);
+      throw new Error("user not found");
     }
-    const {password,createdAt,updatedAt,...others}=user._doc
+    const { password, createdAt, updatedAt, ...others } = user._doc;
     res.status(200).json(others);
-
-}))
+  })
+);
 
 //follow a user
-router.put('/:id/follow',asyncHandler(async(req,res)=>{
-   
-
-}))
+router.put(
+  "/:id/follow",
+  asyncHandler(async (req, res) => {
+    if (req.body.userId === req.params.id) {
+      res.status(403);
+      throw new Error("you cant follow yourself");
+    } else {
+      const currentUser = await User.findById(req.body.userId);
+      const user = await User.findById(req.params.id);
+      //cu follows user => user followers cu
+      if (user.followers.includes(currentUser._id)) {
+        res.status(403);
+        throw new Error("You already following");
+      } else {
+        await currentUser.updateOne({
+          $push: {
+            following: req.params.id,
+          },
+        });
+        await user.updateOne({
+          $push: {
+            followers: req.body.userId,
+          },
+        });
+        res.status(200).json({ msg: "user has been followed" });
+      }
+    }
+  })
+);
 
 //unfollow a user
+router.put(
+  "/:id/unfollow",
+  asyncHandler(async (req, res) => {
+    if (req.body.userId === req.params.id) {
+      res.status(403);
+      throw new Error("you cant unfollow yourself");
+    } else {
+      const currentUser = await User.findById(req.body.userId);
+      const user = await User.findById(req.params.id);
+      //cu follows user => user followers cu
+      if (user.followers.includes(currentUser._id)) {
+        //remove that user from current user followings
+        await user.updateOne({ $pull: { followers: req.body.userId } });
+        await currentUser.updateOne({ $pull: { following: req.params.id } });
+        res.status(200).json("user has been unfollowed");
+      } else {
+        res.status(400);
+        throw new Error("First Follow");
+      }
+    }
+  })
+);
 
 module.exports = router;
