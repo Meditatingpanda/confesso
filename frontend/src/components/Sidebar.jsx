@@ -29,7 +29,7 @@ const Sidebar = ({mode,setMode}) => {
               <ListItemIcon>
                 <Home />
               </ListItemIcon>
-              <ListItemText primary="Homepage" />
+              <ListItemText primary="Home" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -37,7 +37,7 @@ const Sidebar = ({mode,setMode}) => {
               <ListItemIcon>
                 <Article />
               </ListItemIcon>
-              <ListItemText primary="Pages" />
+              <ListItemText primary="Followers" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -45,7 +45,7 @@ const Sidebar = ({mode,setMode}) => {
               <ListItemIcon>
                 <Group />
               </ListItemIcon>
-              <ListItemText primary="Groups" />
+              <ListItemText primary="Followings" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -53,7 +53,7 @@ const Sidebar = ({mode,setMode}) => {
               <ListItemIcon>
                 <Storefront />
               </ListItemIcon>
-              <ListItemText primary="Marketplace" />
+              <ListItemText primary="Settings" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -61,7 +61,7 @@ const Sidebar = ({mode,setMode}) => {
               <ListItemIcon>
                 <Person />
               </ListItemIcon>
-              <ListItemText primary="Friends" />
+              <ListItemText primary="Contribute" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>

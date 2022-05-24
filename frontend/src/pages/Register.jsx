@@ -9,15 +9,10 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 
 function Register() {
-  let darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-    },
-  });
-  darkTheme=responsiveFontSizes(darkTheme)
+  
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
+     
         <Box
           bgcolor={"background.default"}
           color={"text.primary"}
@@ -38,7 +33,7 @@ function Register() {
             >
               <Box>
                 <Typography variant="h1">Confesso</Typography>
-                <Typography variant="body1">Let Your imposter syndrome out!</Typography>
+                <Typography variant="body1">Let your Imposter Syndrome come from your brain</Typography>
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -73,7 +68,7 @@ function Register() {
             </Grid>
           </Grid>
         </Box>
-      </ThemeProvider>
+     
     </>
   );
 }

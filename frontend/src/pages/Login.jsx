@@ -9,15 +9,11 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 
 function Login() {
-  let darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-    },
-  });
-  darkTheme=responsiveFontSizes(darkTheme)
+  
+  
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
+     
         <Box
           bgcolor={"background.default"}
           color={"text.primary"}
@@ -38,7 +34,9 @@ function Login() {
             >
               <Box>
                 <Typography variant="h1">Confesso</Typography>
-                <Typography variant="body1">Let Your imposter syndrome out!</Typography>
+                <Typography variant="body1">
+                  Let your Imposter Syndrome come from your brain
+                </Typography>
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -53,14 +51,13 @@ function Login() {
                   gap: 2,
                 }}
               >
-                
                 <TextField variant="outlined" type="email" label="Email" />
                 <TextField
                   variant="outlined"
                   type="password"
                   label="Password"
                 />
-                
+
                 <Button variant="contained" color="primary">
                   Login
                 </Button>
@@ -69,7 +66,7 @@ function Login() {
             </Grid>
           </Grid>
         </Box>
-      </ThemeProvider>
+      
     </>
   );
 }

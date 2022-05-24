@@ -12,28 +12,27 @@ import {
 } from "@mui/material";
 const Post = () => {
   return (
-    <Card sx={{ margin:{
-        xs:2,
-        sm:5
-    } }}>
+    <Card>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            R
-          </Avatar>
+          <Avatar
+            src="https://avatars.githubusercontent.com/u/83230804?v=4"
+            sx={{ bgcolor: "red" }}
+            aria-label="recipe"
+          />
         }
         action={
           <IconButton aria-label="settings">
             <MoreVert />
           </IconButton>
         }
-        title="John Doe"
+        title="Gyana Ranjan Panda"
         subheader="September 14, 2022"
       />
       <CardMedia
         component="img"
         height="20%"
-        image="https://images.pexels.com/photos/4534200/pexels-photo-4534200.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+        image="https://res.cloudinary.com/thatanjan/f_auto,c_limit,w_3840,q_50/confession/post/6160386bd66aee0016b46448/6239477f1bc0e200160cd9fd/lqvaslzhn39xorolp148"
         alt="Paella dish"
       />
       <CardContent>
