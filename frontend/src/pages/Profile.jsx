@@ -9,6 +9,7 @@ import ProfileBio from "../components/ProfileBio";
 import Sidebar from "../components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../features/profileSlice";
+import { fetchPosts } from "../features/postSlice";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -32,12 +33,13 @@ function Profile() {
   const [mode, setMode] = useState("dark");
   const [value, setValue] = useState(0);
   const params = useParams();
-  const [user, setUser] = useState(null);
 
   const dispacth = useDispatch();
   useEffect(() => {
     dispacth(fetchUser(params.username));
+    dispacth(fetchPosts(params.username));
   }, []);
+
   const state = useSelector((state) => state.user);
   const handleChange = (event, newValue) => {
     setValue(newValue);

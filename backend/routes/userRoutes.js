@@ -59,11 +59,11 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const userId = req.query.userId;
-    const userName = req.query.userName;
+    const username = req.query.username;
 
     const user = userId
       ? await User.findById(userId)
-      : await User.findOne({ username: userName });
+      : await User.findOne({ username });
     if (!user) {
       res.status(400);
       throw new Error("user not found");

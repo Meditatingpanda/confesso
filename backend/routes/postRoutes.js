@@ -92,9 +92,28 @@ router.get(
         return Post.find({ userId: id });
       })
     );
-   
+
     const ownPosts = await Post.find({ userId: req.body.userId });
     res.status(200).json(ownPosts.concat(...friendPosts));
+  })
+);
+
+//get user's post
+router.get(
+  "/",
+  asyncHandler(async (req, res) => {
+    const userId = req.query.userId;
+    const username = req.query.username;
+    if (username) {
+      const user = await User.findOne({ username });
+      const post = await Post.find({ userId: user._id });
+      res.status(200).json(post);
+      console.log(username,1)
+    } else {
+      console.log(userId)
+      const post = await Post.find({ userId });
+      res.status(200).json(post);
+    }
   })
 );
 
