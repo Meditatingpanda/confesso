@@ -54,11 +54,16 @@ router.delete(
   })
 );
 
-//get a user by id
+//get a user by query
 router.get(
-  "/:id",
+  "/",
   asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
+    const userId = req.query.userId;
+    const userName = req.query.userName;
+
+    const user = userId
+      ? await User.findById(userId)
+      : await User.findOne({ username: userName });
     if (!user) {
       res.status(400);
       throw new Error("user not found");

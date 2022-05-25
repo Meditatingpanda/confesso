@@ -14,7 +14,7 @@ function App() {
   });
   darkTheme = responsiveFontSizes(darkTheme);
   return (
-    <>
+    
       <ThemeProvider theme={darkTheme}>
         <Router>
           <Routes>
@@ -25,7 +25,7 @@ function App() {
           </Routes>
         </Router>
       </ThemeProvider>
-    </>
+    
   );
 }
 

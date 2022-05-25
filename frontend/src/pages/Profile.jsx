@@ -1,14 +1,14 @@
-import { Stack } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Tabs } from "@mui/material";
-import { Tab } from "@mui/material";
-import { Box } from "@mui/material";
-import { useState } from "react";
+import { Stack, Typography, Tabs, Tab, Box } from "@mui/material";
+import { useEffect, useState } from "react";
+
+import { useParams } from "react-router-dom";
 import Add from "../components/Add";
 import Feed from "../components/Feed";
 import Navbar from "../components/Navbar";
 import ProfileBio from "../components/ProfileBio";
 import Sidebar from "../components/Sidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser } from "../features/profileSlice";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -31,7 +31,14 @@ function TabPanel(props) {
 function Profile() {
   const [mode, setMode] = useState("dark");
   const [value, setValue] = useState(0);
+  const params = useParams();
+  const [user, setUser] = useState(null);
 
+  const dispacth = useDispatch();
+  useEffect(() => {
+    dispacth(fetchUser(params.username));
+  }, []);
+  const state = useSelector((state) => state.user);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -43,8 +50,7 @@ function Profile() {
         sx={{ minHeight: "100vh" }}
       >
         <Navbar />
-
-        <Stack direction="row"  justifyContent="space-between">
+        <Stack direction="row" justifyContent="space-between">
           <Sidebar setMode={setMode} mode={mode} />
           <Box sx={{ display: "flex", flexDirection: "column", flex: 3 }}>
             <ProfileBio />
@@ -56,8 +62,8 @@ function Profile() {
                   aria-label="basic tabs example"
                 >
                   <Tab label="10 Posts" />
-                  <Tab label=" 69 followers" />
-                  <Tab label="10 followings" />
+                  <Tab label={` followers`} />
+                  <Tab label={` followers`} />
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
@@ -72,7 +78,7 @@ function Profile() {
             </Box>
           </Box>
         </Stack>
-        <Add/>
+        <Add />
       </Box>
     </>
   );
