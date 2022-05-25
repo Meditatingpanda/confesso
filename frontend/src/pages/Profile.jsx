@@ -10,6 +10,7 @@ import Sidebar from "../components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../features/profileSlice";
 import { fetchPosts } from "../features/postSlice";
+import { fetchTimelinePosts } from "../features/timelineSlice";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -38,6 +39,7 @@ function Profile() {
   useEffect(() => {
     dispacth(fetchUser(params.username));
     dispacth(fetchPosts(params.username));
+    dispacth(fetchTimelinePosts());
   }, []);
 
   const state = useSelector((state) => state.user);

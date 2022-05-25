@@ -86,14 +86,15 @@ router.get(
   "/timeline/all",
   asyncHandler(async (req, res) => {
     //get posts from the followings and own posts
-    const user = await User.findById(req.body.userId);
+    const userId=req.query.userId;
+    const user = await User.findById(userId);
     const friendPosts = await Promise.all(
       user.following.map((id) => {
         return Post.find({ userId: id });
       })
     );
 
-    const ownPosts = await Post.find({ userId: req.body.userId });
+    const ownPosts = await Post.find({ userId: userId });
     res.status(200).json(ownPosts.concat(...friendPosts));
   })
 );
