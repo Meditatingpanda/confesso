@@ -6,6 +6,7 @@ import { Box, createTheme, Stack, ThemeProvider } from "@mui/material";
 import Navbar from "../components/Navbar";
 import Add from "../components/Add";
 import { useEffect } from "react";
+
 function Home() {
   const [mode, setMode] = useState(localStorage.mode || "dark");
   useEffect(() => {
@@ -16,6 +17,8 @@ function Home() {
       mode: mode,
     },
   });
+
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Box

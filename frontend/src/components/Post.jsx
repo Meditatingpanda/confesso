@@ -10,9 +10,9 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-const Post = () => {
+const Post = ({ desc, img, likes }) => {
   return (
-    <Card sx={{mb:4,mt:2}}>
+    <Card sx={{ mb: 4, mt: 2 }}>
       <CardHeader
         avatar={
           <Avatar
@@ -29,17 +29,10 @@ const Post = () => {
         title="Gyana Ranjan Panda"
         subheader="September 14, 2022"
       />
-      <CardMedia
-        component="img"
-        height="20%"
-        image="https://res.cloudinary.com/thatanjan/f_auto,c_limit,w_3840,q_50/confession/post/6160386bd66aee0016b46448/6239477f1bc0e200160cd9fd/lqvaslzhn39xorolp148"
-        alt="Paella dish"
-      />
+      <CardMedia component="img" height="20%" image={img} alt="Paella dish" />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+        <Typography component={"span"} variant="body2" color="text.secondary">
+          {desc}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>

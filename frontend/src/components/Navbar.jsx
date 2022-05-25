@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
@@ -45,6 +46,7 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const navigate=useNavigate()
   return (
     <AppBar position="sticky">
       <StyledToolbar>
@@ -95,7 +97,7 @@ const Navbar = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem>Profile</MenuItem>
+        <MenuItem onClick={()=>navigate("/profile/gyana")}>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
         <MenuItem>Logout</MenuItem>
       </Menu>

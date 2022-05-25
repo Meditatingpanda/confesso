@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../features/profileSlice";
 import { fetchPosts } from "../features/postSlice";
 import { fetchTimelinePosts } from "../features/timelineSlice";
+import { Skeleton } from "@mui/material";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -39,10 +40,10 @@ function Profile() {
   useEffect(() => {
     dispacth(fetchUser(params.username));
     dispacth(fetchPosts(params.username));
-    dispacth(fetchTimelinePosts());
   }, []);
 
   const state = useSelector((state) => state.user);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -56,6 +57,7 @@ function Profile() {
         <Navbar />
         <Stack direction="row" justifyContent="space-between">
           <Sidebar setMode={setMode} mode={mode} />
+
           <Box sx={{ display: "flex", flexDirection: "column", flex: 3 }}>
             <ProfileBio />
             <Box sx={{ width: "100%" }}>
@@ -66,8 +68,16 @@ function Profile() {
                   aria-label="basic tabs example"
                 >
                   <Tab label="10 Posts" />
-                  <Tab label={` followers`} />
-                  <Tab label={` followers`} />
+                  <Tab
+                    label={`${
+                      state.isLoading 
+                    } followers`}
+                  />
+                  <Tab
+                    label={`${
+                      state.isLoading 
+                    } followers`}
+                  />
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>

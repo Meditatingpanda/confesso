@@ -7,8 +7,11 @@ const state = {
 };
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (user) => {
-  const res = await axios.get(`/users/?username=${user}`);
-
+  const res = await axios.get(`/users/`, {
+    params: {
+      username: user,
+    },
+  });
   return res.data;
 });
 

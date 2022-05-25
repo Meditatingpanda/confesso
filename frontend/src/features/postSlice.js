@@ -9,7 +9,11 @@ const state = {
 export const fetchPosts = createAsyncThunk(
   "ownPost/fetchPosts",
   async (user) => {
-    const res = await axios.get(`/posts/?username=${user}`);
+    const res = await axios.get(`/posts/`, {
+      params: {
+        username: user,
+      },
+    });
     return res.data;
   }
 );
