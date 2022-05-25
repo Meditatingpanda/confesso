@@ -1,12 +1,10 @@
 import { Typography } from "@mui/material";
-import { createTheme } from "@mui/material";
 import { Paper } from "@mui/material";
-import { responsiveFontSizes } from "@mui/material";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
-import { ThemeProvider } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
+import {Link} from 'react-router-dom'
 
 function Register() {
   return (
@@ -59,7 +57,7 @@ function Register() {
               <Button variant="contained" color="primary">
                 Sign Up
               </Button>
-              <Button>Login</Button>
+              <Button component={Link} to='/login' >Login</Button>
             </Paper>
           </Grid>
         </Grid>

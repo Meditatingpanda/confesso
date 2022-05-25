@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -47,9 +48,14 @@ const Navbar = () => {
   return (
     <AppBar position="sticky">
       <StyledToolbar>
-        <Typography variant="h6" sx={{ display: { xs: "none", sm: "block" } }}>
-          Confesso
-        </Typography>
+        <Link to="/" style={{ all: "unset" }}>
+          <Typography
+            variant="h6"
+            sx={{ display: { xs: "none", sm: "block", cursor: "pointer" } }}
+          >
+            Confesso
+          </Typography>
+        </Link>
         <Pets sx={{ display: { xs: "block", sm: "none" } }} />
         <Search>
           <InputBase placeholder="search..." />
@@ -72,7 +78,7 @@ const Navbar = () => {
             sx={{ width: 30, height: 30 }}
             src="https://avatars.githubusercontent.com/u/83230804?v=4"
           />
-          <Typography variant="span">John</Typography>
+          <Typography variant="span">Gyana</Typography>
         </UserBox>
       </StyledToolbar>
       <Menu
