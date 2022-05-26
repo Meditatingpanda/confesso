@@ -32,7 +32,12 @@ export const registerStart = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState: state,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      localStorage.removeItem("user");
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     //cases for login event
     builder.addCase(loginStart.pending, (state) => {
@@ -56,6 +61,7 @@ const authSlice = createSlice({
       state.isFetching = false;
     });
     builder.addCase(registerStart.rejected, (state, action) => {
+      console.log(action);
       state.error = action.error.message;
       state.isFetching = false;
     });
@@ -63,3 +69,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { logout } = authSlice.actions;

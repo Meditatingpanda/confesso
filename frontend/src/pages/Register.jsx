@@ -9,6 +9,7 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { registerStart } from "../features/authSlice";
 
@@ -19,6 +20,7 @@ function Register() {
     password: "",
     password1: "",
   });
+  const navigate = useNavigate();
   const onChange = (e) => {
     setsignUp({ ...signUp, [e.target.name]: e.target.value });
   };
@@ -26,9 +28,7 @@ function Register() {
   const Dispatch = useDispatch();
   const handleRegister = (e) => {
     e.preventDefault();
-
     Dispatch(registerStart(signUp));
-    // Dispatch(loginStart(login));
   };
   return (
     <>
@@ -43,7 +43,7 @@ function Register() {
           width: "100%",
         }}
       >
-        <Grid sx={{ width: "85%" }} container spacing={6}>
+        <Grid sx={{ width: { xs: "100%", sm: "85%" } }} container spacing={6}>
           <Grid
             item
             xs={12}
@@ -76,6 +76,7 @@ function Register() {
                 name="username"
                 variant="outlined"
                 label="Username"
+                required
               />
               <TextField
                 name="email"
@@ -83,6 +84,7 @@ function Register() {
                 type="email"
                 label="Email"
                 onChange={onChange}
+                required
               />
               <TextField
                 name="password"
@@ -90,6 +92,7 @@ function Register() {
                 type="password"
                 onChange={onChange}
                 label="Password"
+                required
               />
               <TextField
                 variant="outlined"
@@ -97,6 +100,7 @@ function Register() {
                 type="password"
                 onChange={onChange}
                 label="Confirm Password"
+                required
               />
               <Button type="submit" variant="contained" color="primary">
                 {state.isFetching ? (

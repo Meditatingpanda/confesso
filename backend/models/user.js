@@ -25,11 +25,12 @@ const UserSchema = new mongoose.Schema(
     },
     coverPicture: {
       type: String,
-      default: "",
+      default:
+        "https://i0.wp.com/boingboing.net/wp-content/uploads/2018/05/cool-background1.png?fit=1192%2C600&ssl=1&w=640",
     },
     following: {
       type: Array,
-      default: [],
+      default: ["628e6c0f332574a3a385db3f"],
     },
     followers: {
       type: Array,

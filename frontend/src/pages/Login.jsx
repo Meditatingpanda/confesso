@@ -12,6 +12,8 @@ import { loginStart } from "../features/authSlice";
 import { Alert } from "@mui/material";
 import { LinearProgress } from "@mui/material";
 import { CircularProgress } from "@mui/material";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [login, setLogin] = useState({
@@ -24,14 +26,14 @@ function Login() {
   };
   const state = useSelector((state) => state.auth);
   const Dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
-
     setErr(false);
     if (login.email === "" || login.password === "") {
       setErr(true);
     } else {
-      Dispatch(loginStart(login));
+      Dispatch(loginStart(login))
     }
   };
   return (
@@ -47,7 +49,7 @@ function Login() {
           width: "100%",
         }}
       >
-        <Grid sx={{ width: "85%" }} container spacing={6}>
+        <Grid sx={{ width: { xs: "100%", sm: "85%" } }} container spacing={6}>
           <Grid
             item
             xs={12}
@@ -82,6 +84,7 @@ function Login() {
                 label="Email"
                 value={login.email}
                 onChange={onChange}
+                required
               />
               <TextField
                 name="password"
@@ -90,6 +93,7 @@ function Login() {
                 label="Password"
                 value={login.password}
                 onChange={onChange}
+                required
               />
 
               <Button

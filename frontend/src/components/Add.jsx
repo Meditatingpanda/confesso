@@ -20,6 +20,7 @@ import {
   VideoCameraBack,
 } from "@mui/icons-material";
 import { Box } from "@mui/system";
+import { useSelector } from "react-redux";
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -36,6 +37,8 @@ const UserBox = styled(Box)({
 
 const Add = () => {
   const [open, setOpen] = useState(false);
+  const user = useSelector((state) => state.auth.user);
+
   return (
     <>
       <Tooltip
@@ -69,12 +72,9 @@ const Add = () => {
             Create post
           </Typography>
           <UserBox>
-            <Avatar
-              src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              sx={{ width: 30, height: 30 }}
-            />
+            <Avatar src={user.profilePicture} sx={{ width: 30, height: 30 }} />
             <Typography fontWeight={500} variant="span">
-              John Doe
+              {user.username}
             </Typography>
           </UserBox>
           <TextField
@@ -86,10 +86,11 @@ const Add = () => {
             variant="standard"
           />
           <Stack direction="row" gap={1} mt={2} mb={3}>
-            <EmojiEmotions color="primary" />
-            <Image color="secondary" />
-            <VideoCameraBack color="success" />
-            <PersonAdd color="error" />
+            {/* <EmojiEmotions color="primary" /> */}
+
+            <Button startIcon={<Image color="secondary" />}>Add Image</Button>
+            {/* <VideoCameraBack color="success" /> */}
+            {/* <PersonAdd color="error" /> */}
           </Stack>
           <ButtonGroup
             fullWidth

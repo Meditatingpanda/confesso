@@ -86,11 +86,12 @@ router.get(
   "/timeline/all",
   asyncHandler(async (req, res) => {
     //get posts from the followings and own posts
-    const userId=req.query.userId;
+    const userId = req.query.userId;
     const user = await User.findById(userId);
     const friendPosts = await Promise.all(
       user.following.map((id) => {
-        return Post.find({ userId: id });
+        let post = Post.find({ userId: id });
+        return post;
       })
     );
 
@@ -109,9 +110,9 @@ router.get(
       const user = await User.findOne({ username });
       const post = await Post.find({ userId: user._id });
       res.status(200).json(post);
-      console.log(username,1)
+      console.log(username, 1);
     } else {
-      console.log(userId)
+      console.log(userId);
       const post = await Post.find({ userId });
       res.status(200).json(post);
     }

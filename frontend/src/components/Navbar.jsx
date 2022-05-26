@@ -12,9 +12,10 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { logout } from "../features/authSlice";
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -46,9 +47,21 @@ const UserBox = styled(Box)(({ theme }) => ({
   },
 }));
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
-  const userData=useSelector((state)=>state.auth.user);
-  const navigate=useNavigate()
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const userData = useSelector((state) => state.auth.user);
+  const Dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    Dispatch(logout());
+    navigate("/login");
+  };
   return (
     <AppBar position="sticky">
       <StyledToolbar>
@@ -59,11 +72,12 @@ const Navbar = () => {
           >
             Confesso
           </Typography>
+          <Pets sx={{ display: { xs: "block", sm: "none" } }} />
         </Link>
-        <Pets sx={{ display: { xs: "block", sm: "none" } }} />
-        <Search>
+
+        {/* <Search>
           <InputBase placeholder="search..." />
-        </Search>
+        </Search> */}
         <Icons>
           <Badge badgeContent={4} color="error">
             <Mail />
@@ -74,10 +88,10 @@ const Navbar = () => {
           <Avatar
             sx={{ width: 30, height: 30 }}
             src={userData.profilePicture}
-            onClick={(e) => setOpen(true)}
+            onClick={handleClick}
           />
         </Icons>
-        <UserBox onClick={(e) => setOpen(true)}>
+        <UserBox onClick={handleClick}>
           <Avatar
             sx={{ width: 30, height: 30 }}
             src={userData.profilePicture}
@@ -88,8 +102,9 @@ const Navbar = () => {
       <Menu
         id="demo-positioned-menu"
         aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
         open={open}
-        onClose={(e) => setOpen(false)}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right",
@@ -99,9 +114,11 @@ const Navbar = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={()=>navigate(`/profile/${userData.username}`)}>Profile</MenuItem>
+        <MenuItem onClick={() => navigate(`/profile/${userData.username}`)}>
+          Profile
+        </MenuItem>
         <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </AppBar>
   );

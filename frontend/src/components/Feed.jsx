@@ -6,7 +6,7 @@ const Feed = ({ profileFeed }) => {
   const state = useSelector((state) => state.timeLine);
   const ownPost = useSelector((state) => state.post.ownPost);
   return (
-    <Box flex={4} p={{ xs: 0, md: 2 }}>
+    <Box component={"span"} flex={4} p={{ xs: 0, md: 2 }}>
       {state.isLoading ? (
         <>
           <Stack spacing={1}>

@@ -7,17 +7,12 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTimelinePosts } from "./features/timelineSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 function App() {
-  const Dispatch = useDispatch();
   const state = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    Dispatch(fetchTimelinePosts(state.user._id));
-  }, []);
-
+  const navigate = useNavigate();
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(state.user));
   }, [state.user]);
@@ -27,6 +22,11 @@ function App() {
     },
   });
   darkTheme = responsiveFontSizes(darkTheme);
+  useEffect(() => {
+    if (state.user) {
+      navigate("/");
+    }
+  }, [state.user]);
 
   return (
     <ThemeProvider theme={darkTheme}>

@@ -10,7 +10,25 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-const Post = ({ desc, img, likes }) => {
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
+const Post = ({ desc, img, likes, _id }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes.length);
+  const user = useSelector((state) => state.auth.user);
+  useEffect(() => {
+    setIsLiked(likes.includes(user._id));
+  }, [user._id, likes]);
+
+  const handleLikes = async () => {
+    const res = await axios.put(`/posts/${_id}/like`, {
+      userId: user._id,
+    });
+    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
+    setIsLiked(!isLiked);
+  };
   return (
     <Card sx={{ mb: 4, mt: 2 }}>
       <CardHeader
@@ -36,8 +54,12 @@ const Post = ({ desc, img, likes }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton onClick={handleLikes} aria-label="add to favorites">
+          <Typography variant="body2" color="text.secondary">
+            {likeCount}
+          </Typography>
           <Checkbox
+            checked={isLiked}
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite sx={{ color: "red" }} />}
           />

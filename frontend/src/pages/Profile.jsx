@@ -14,7 +14,7 @@ import { fetchTimelinePosts } from "../features/timelineSlice";
 import { Skeleton } from "@mui/material";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-   
+
   return (
     <div
       role="tabpanel"
@@ -43,8 +43,7 @@ function Profile() {
   }, []);
 
   const state = useSelector((state) => state.user);
- 
-
+  const posts = useSelector((state) => state.post.ownPost);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -68,17 +67,9 @@ function Profile() {
                   onChange={handleChange}
                   aria-label="basic tabs example"
                 >
-                  <Tab label="10 Posts" />
-                  <Tab
-                    label={`${
-                      state.user!=='undefined'
-                    } followers`}
-                  />
-                  <Tab
-                    label={`${
-                      state.isLoading 
-                    } followers`}
-                  />
+                  <Tab label={`${posts.length} Posts`} />
+                  <Tab label={`followers`} />
+                  <Tab label={`followings`} />
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
