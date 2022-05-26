@@ -8,7 +8,7 @@ const state = {
 
 export const fetchTimelinePosts = createAsyncThunk(
   "timeline/fetchPosts",
-  async (user = "628e6c0f332574a3a385db3f") => {
+  async (user) => {
     const res = await axios.get("/posts/timeline/all", {
         params:{
           userId:user

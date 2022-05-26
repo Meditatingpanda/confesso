@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginStart } from "../features/authSlice";
 import { Alert } from "@mui/material";
 import { LinearProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 function Login() {
   const [login, setLogin] = useState({
@@ -91,13 +92,18 @@ function Login() {
                 onChange={onChange}
               />
 
-              <Button type="submit" variant="contained" color="primary">
-                Login
+              <Button
+                type="submit"
+                disabled={state.isFetching}
+                variant="contained"
+                color="primary"
+              >
+                {state.isFetching ? <CircularProgress size="40px" /> : "Log In"}
               </Button>
               <Button component={Link} to="/register">
                 Create New Account
               </Button>
-              {state.isFetching && <LinearProgress sx={{ height: 10 }} />}
+
               {state.error && <Alert severity="error">{state.error}</Alert>}
               {err && <Alert severity="error">All fields are required</Alert>}
             </Paper>

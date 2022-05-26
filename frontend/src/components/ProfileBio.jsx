@@ -5,16 +5,18 @@ import { CardContent } from "@mui/material";
 import { Box } from "@mui/material";
 import { Card } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function ProfileBio() {
+  const userData=useSelector((state)=>state.auth.user);
   return (
     <Card>
       <CardMedia
         component="img"
         height="140"
-        image="https://image.shutterstock.com/image-photo/green-background-people-who-want-260nw-1165812823.jpg"
+        image={userData.coverPicture}
         sx={{objectFit:'cover'}}
-        alt="green iguana"
+        alt="cover pic"
       />
       <Box
         sx={{
@@ -26,18 +28,18 @@ function ProfileBio() {
       >
         <Avatar
           sx={{ width: "10rem", height: "10rem" }}
-          src="https://avatars.githubusercontent.com/u/83230804?v=4"
+          src={userData.profilePicture}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            Gyana Ranjan Panda
+           {userData.username}
           </Typography>
           <Typography
             sx={{ textAlign: "center" }}
             variant="body2"
             color="text.secondary"
           >
-            Hello World
+            {userData.desc}
           </Typography>
         </CardContent>
       </Box>

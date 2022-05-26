@@ -12,22 +12,22 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 function App() {
   const Dispatch = useDispatch();
+  const state = useSelector((state) => state.auth);
+
   useEffect(() => {
-    Dispatch(fetchTimelinePosts());
+    Dispatch(fetchTimelinePosts(state.user._id));
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(state.user));
+  }, [state.user]);
   let darkTheme = createTheme({
     palette: {
       mode: "dark",
     },
   });
   darkTheme = responsiveFontSizes(darkTheme);
-  const navigate = useNavigate();
-  const state = useSelector((state) => state.auth);
-  // if (state.user) {
-  //   navigate("/");
-  // }
-  
+
   return (
     <ThemeProvider theme={darkTheme}>
       <Routes>

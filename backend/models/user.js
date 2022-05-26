@@ -42,6 +42,7 @@ const UserSchema = new mongoose.Schema(
     desc: {
       type: String,
       max: 100,
+      default: "hello world",
     },
   },
   {

@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -46,6 +47,7 @@ const UserBox = styled(Box)(({ theme }) => ({
 }));
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const userData=useSelector((state)=>state.auth.user);
   const navigate=useNavigate()
   return (
     <AppBar position="sticky">
@@ -71,16 +73,16 @@ const Navbar = () => {
           </Badge>
           <Avatar
             sx={{ width: 30, height: 30 }}
-            src="https://avatars.githubusercontent.com/u/83230804?v=4"
+            src={userData.profilePicture}
             onClick={(e) => setOpen(true)}
           />
         </Icons>
         <UserBox onClick={(e) => setOpen(true)}>
           <Avatar
             sx={{ width: 30, height: 30 }}
-            src="https://avatars.githubusercontent.com/u/83230804?v=4"
+            src={userData.profilePicture}
           />
-          <Typography variant="span">Gyana</Typography>
+          <Typography variant="span">{userData.username}</Typography>
         </UserBox>
       </StyledToolbar>
       <Menu
@@ -97,7 +99,7 @@ const Navbar = () => {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={()=>navigate("/profile/gyana")}>Profile</MenuItem>
+        <MenuItem onClick={()=>navigate(`/profile/${userData.username}`)}>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
         <MenuItem>Logout</MenuItem>
       </Menu>

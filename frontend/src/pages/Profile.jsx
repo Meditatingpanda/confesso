@@ -14,7 +14,7 @@ import { fetchTimelinePosts } from "../features/timelineSlice";
 import { Skeleton } from "@mui/material";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
+   
   return (
     <div
       role="tabpanel"
@@ -43,6 +43,7 @@ function Profile() {
   }, []);
 
   const state = useSelector((state) => state.user);
+ 
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -81,7 +82,7 @@ function Profile() {
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
-                <Feed />
+                <Feed profileFeed={true} />
               </TabPanel>
               <TabPanel value={value} index={1}>
                 followers

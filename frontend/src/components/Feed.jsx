@@ -2,8 +2,9 @@ import { Box, Stack, Skeleton } from "@mui/material";
 import React, { useState } from "react";
 import Post from "./Post";
 import { useSelector } from "react-redux";
-const Feed = () => {
+const Feed = ({ profileFeed }) => {
   const state = useSelector((state) => state.timeLine);
+  const ownPost = useSelector((state) => state.post.ownPost);
   return (
     <Box flex={4} p={{ xs: 0, md: 2 }}>
       {state.isLoading ? (
@@ -21,6 +22,10 @@ const Feed = () => {
             <Skeleton variant="rectangular" height={300} />
           </Stack>
         </>
+      ) : profileFeed ? (
+        ownPost.map((post) => {
+          return <Post key={post._id} {...post} />;
+        })
       ) : (
         state.posts.map((post) => {
           return <Post key={post._id} {...post} />;

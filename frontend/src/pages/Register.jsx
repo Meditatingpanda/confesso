@@ -3,6 +3,7 @@ import { Paper } from "@mui/material";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Alert } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { LinearProgress } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
@@ -98,12 +99,16 @@ function Register() {
                 label="Confirm Password"
               />
               <Button type="submit" variant="contained" color="primary">
-                Sign Up
+                {state.isFetching ? (
+                  <CircularProgress size="40px" />
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
               <Button component={Link} to="/login">
                 Login
               </Button>
-              {state.isFetching && <LinearProgress sx={{ height: 10 }} />}
+              {/* {state.isFetching && <LinearProgress sx={{ height: 10 }} />} */}
               {state.error && <Alert severity="error">{state.error}</Alert>}
               {state.success && (
                 <Alert severity="success">Account has been created</Alert>
