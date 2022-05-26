@@ -2,11 +2,33 @@ import { Typography } from "@mui/material";
 import { Paper } from "@mui/material";
 import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
+import { Alert } from "@mui/material";
+import { LinearProgress } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import {Link} from 'react-router-dom'
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { registerStart } from "../features/authSlice";
 
 function Register() {
+  const [signUp, setsignUp] = useState({
+    username: "",
+    email: "",
+    password: "",
+    password1: "",
+  });
+  const onChange = (e) => {
+    setsignUp({ ...signUp, [e.target.name]: e.target.value });
+  };
+  const state = useSelector((state) => state.auth);
+  const Dispatch = useDispatch();
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    Dispatch(registerStart(signUp));
+    // Dispatch(loginStart(login));
+  };
   return (
     <>
       <Box
@@ -36,6 +58,8 @@ function Register() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper
+              component={"form"}
+              onSubmit={handleRegister}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -46,18 +70,44 @@ function Register() {
                 gap: 2,
               }}
             >
-              <TextField variant="outlined" label="Username" />
-              <TextField variant="outlined" type="email" label="Email" />
-              <TextField variant="outlined" type="password" label="Password" />
               <TextField
+                onChange={onChange}
+                name="username"
+                variant="outlined"
+                label="Username"
+              />
+              <TextField
+                name="email"
+                variant="outlined"
+                type="email"
+                label="Email"
+                onChange={onChange}
+              />
+              <TextField
+                name="password"
                 variant="outlined"
                 type="password"
+                onChange={onChange}
+                label="Password"
+              />
+              <TextField
+                variant="outlined"
+                name="password1"
+                type="password"
+                onChange={onChange}
                 label="Confirm Password"
               />
-              <Button variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="primary">
                 Sign Up
               </Button>
-              <Button component={Link} to='/login' >Login</Button>
+              <Button component={Link} to="/login">
+                Login
+              </Button>
+              {state.isFetching && <LinearProgress sx={{ height: 10 }} />}
+              {state.error && <Alert severity="error">{state.error}</Alert>}
+              {state.success && (
+                <Alert severity="success">Account has been created</Alert>
+              )}
             </Paper>
           </Grid>
         </Grid>

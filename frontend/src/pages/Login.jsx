@@ -4,9 +4,35 @@ import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
+import { useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginStart } from "../features/authSlice";
+import { Alert } from "@mui/material";
+import { LinearProgress } from "@mui/material";
 
 function Login() {
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const [err, setErr] = useState(false);
+  const onChange = (e) => {
+    setLogin((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const state = useSelector((state) => state.auth);
+  const Dispatch = useDispatch();
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    setErr(false);
+    if (login.email === "" || login.password === "") {
+      setErr(true);
+    } else {
+      Dispatch(loginStart(login));
+    }
+  };
   return (
     <>
       <Box
@@ -36,6 +62,8 @@ function Login() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper
+              onSubmit={handleLogin}
+              component={"form"}
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -46,15 +74,32 @@ function Login() {
                 gap: 2,
               }}
             >
-              <TextField variant="outlined" type="email" label="Email" />
-              <TextField variant="outlined" type="password" label="Password" />
+              <TextField
+                name="email"
+                variant="outlined"
+                type="email"
+                label="Email"
+                value={login.email}
+                onChange={onChange}
+              />
+              <TextField
+                name="password"
+                variant="outlined"
+                type="password"
+                label="Password"
+                value={login.password}
+                onChange={onChange}
+              />
 
-              <Button variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="primary">
                 Login
               </Button>
               <Button component={Link} to="/register">
                 Create New Account
               </Button>
+              {state.isFetching && <LinearProgress sx={{ height: 10 }} />}
+              {state.error && <Alert severity="error">{state.error}</Alert>}
+              {err && <Alert severity="error">All fields are required</Alert>}
             </Paper>
           </Grid>
         </Grid>

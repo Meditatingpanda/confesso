@@ -24,9 +24,10 @@ function App() {
   darkTheme = responsiveFontSizes(darkTheme);
   const navigate = useNavigate();
   const state = useSelector((state) => state.auth);
-  if (state.user) {
-    navigate("/");
-  }
+  // if (state.user) {
+  //   navigate("/");
+  // }
+  
   return (
     <ThemeProvider theme={darkTheme}>
       <Routes>

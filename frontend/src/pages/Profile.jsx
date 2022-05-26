@@ -70,7 +70,7 @@ function Profile() {
                   <Tab label="10 Posts" />
                   <Tab
                     label={`${
-                      state.isLoading 
+                      state.user!=='undefined'
                     } followers`}
                   />
                   <Tab

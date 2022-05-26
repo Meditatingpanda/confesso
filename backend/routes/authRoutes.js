@@ -49,9 +49,10 @@ router.post(
     if (!check) {
       res.status(400);
       throw new Error("Bad Credentials");
+    } else {
+      const { password, ...other } = user._doc;
+      res.status(200).json({ ...other });
     }
-
-    res.status(200).json({ user });
   })
 );
 
