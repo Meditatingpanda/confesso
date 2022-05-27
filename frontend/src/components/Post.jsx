@@ -47,7 +47,7 @@ const Post = ({ desc, img, likes, _id }) => {
         title="Gyana Ranjan Panda"
         subheader="September 14, 2022"
       />
-      <CardMedia component="img" height="20%" image={img} alt="Paella dish" />
+      <CardMedia component="img" height="20%" image={img} alt="post image" />
       <CardContent>
         <Typography component={"span"} variant="body2" color="text.secondary">
           {desc}

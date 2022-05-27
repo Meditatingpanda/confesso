@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  ButtonGroup,
   Fab,
   Modal,
   Stack,
@@ -11,18 +10,12 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
-import {
-  Add as AddIcon,
-  DateRange,
-  EmojiEmotions,
-  Image,
-  PersonAdd,
-  VideoCameraBack,
-} from "@mui/icons-material";
+import { Add as AddIcon, Image } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { Alert } from "@mui/material";
 import supabase from "../helpers/connectBucket";
+import axios from "axios";
 
 // Create a single supabase client for interacting with your database
 
@@ -43,18 +36,28 @@ const Add = () => {
   const [open, setOpen] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const [image, setImage] = useState(null);
+  const [postData, setPostData] = useState({
+    userId: user._id,
+    desc: "",
+    img: "https://wallpaperaccess.com/full/36626.jpg",
+  });
+
   const handleImageUpload = async (e) => {
     setImage(e.target.files[0]);
-    const avatarFile = e.target.files[0]
-    console.log(avatarFile)
+    const avatarFile = e.target.files[0];
+    console.log(avatarFile);
     const { data, error } = await supabase.storage
       .from("confesso-storage")
-      .upload(
-        "/Users/travelingmonk/Desktop/Screenshot 2022-05-24 at 3.39.33 PM.png",
-        avatarFile
-      );
-
-    console.log(data, error);
+      .upload(avatarFile.name, avatarFile);   
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("/posts/", postData);
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -84,7 +87,9 @@ const Add = () => {
           bgcolor={"background.default"}
           color={"text.primary"}
           p={3}
+          component={"form"}
           borderRadius={5}
+          onSubmit={handleSubmit}
         >
           <Typography variant="h6" color="gray" textAlign="center">
             Create post
@@ -99,34 +104,40 @@ const Add = () => {
             sx={{ width: "100%" }}
             id="standard-multiline-static"
             multiline
+            onChange={(e) => setPostData({ ...postData, desc: e.target.value })}
             rows={3}
             placeholder="What's on your mind?"
             variant="standard"
           />
+
           <Stack direction="row" gap={1} mt={2} mb={3}>
-            {/* <EmojiEmotions color="primary" /> */}
             {!image ? (
               <Button component="label" startIcon={<Image color="secondary" />}>
-                Add Image{" "}
+                Add Image
                 <input type="file" hidden onChange={handleImageUpload} />
               </Button>
             ) : (
               <Alert severity="success">Image Added</Alert>
             )}
-
-            {/* <VideoCameraBack color="success" /> */}
-            {/* <PersonAdd color="error" /> */}
           </Stack>
-          <ButtonGroup
-            fullWidth
-            variant="contained"
-            aria-label="outlined primary button group"
-          >
-            <Button>Post</Button>
-            <Button sx={{ width: "100px" }}>
-              <DateRange />
+          <Box>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ width: "70%" }}
+              color="primary"
+            >
+              Post
             </Button>
-          </ButtonGroup>
+            <Button
+              onClick={(e) => setOpen(false)}
+              variant="contained"
+              sx={{ width: "30%" }}
+              color="error"
+            >
+              Cancel
+            </Button>
+          </Box>
         </Box>
       </SytledModal>
     </>

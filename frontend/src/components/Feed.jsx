@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 const Feed = ({ profileFeed }) => {
   const state = useSelector((state) => state.timeLine);
   const ownPost = useSelector((state) => state.post.ownPost);
+
   return (
     <Box component={"span"} flex={4} p={{ xs: 0, md: 2 }}>
       {state.isLoading ? (
