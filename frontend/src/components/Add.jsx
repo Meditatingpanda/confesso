@@ -21,6 +21,10 @@ import {
 } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
+import { Alert } from "@mui/material";
+import supabase from "../helpers/connectBucket";
+
+// Create a single supabase client for interacting with your database
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -38,6 +42,20 @@ const UserBox = styled(Box)({
 const Add = () => {
   const [open, setOpen] = useState(false);
   const user = useSelector((state) => state.auth.user);
+  const [image, setImage] = useState(null);
+  const handleImageUpload = async (e) => {
+    setImage(e.target.files[0]);
+    const avatarFile = e.target.files[0]
+    console.log(avatarFile)
+    const { data, error } = await supabase.storage
+      .from("confesso-storage")
+      .upload(
+        "/Users/travelingmonk/Desktop/Screenshot 2022-05-24 at 3.39.33 PM.png",
+        avatarFile
+      );
+
+    console.log(data, error);
+  };
 
   return (
     <>
@@ -62,7 +80,7 @@ const Add = () => {
       >
         <Box
           width={400}
-          height={280}
+          height={"auto"}
           bgcolor={"background.default"}
           color={"text.primary"}
           p={3}
@@ -87,8 +105,15 @@ const Add = () => {
           />
           <Stack direction="row" gap={1} mt={2} mb={3}>
             {/* <EmojiEmotions color="primary" /> */}
+            {!image ? (
+              <Button component="label" startIcon={<Image color="secondary" />}>
+                Add Image{" "}
+                <input type="file" hidden onChange={handleImageUpload} />
+              </Button>
+            ) : (
+              <Alert severity="success">Image Added</Alert>
+            )}
 
-            <Button startIcon={<Image color="secondary" />}>Add Image</Button>
             {/* <VideoCameraBack color="success" /> */}
             {/* <PersonAdd color="error" /> */}
           </Stack>
