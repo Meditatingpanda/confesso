@@ -10,9 +10,9 @@ export const fetchTimelinePosts = createAsyncThunk(
   "timeline/fetchPosts",
   async (user) => {
     const res = await axios.get("/posts/timeline/all", {
-        params:{
-          userId:user
-        }
+      params: {
+        userId: user,
+      },
     });
 
     return res.data;
@@ -28,7 +28,10 @@ const timelineSlice = createSlice({
     });
     builder.addCase(fetchTimelinePosts.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+
+      state.posts = action.payload.sort(
+        (p1, p2) => new Date(p2.createdAt) - new Date(p1.createdAt)
+      );
     });
     builder.addCase(fetchTimelinePosts.rejected, (state, action) => {
       state.isLoading = false;

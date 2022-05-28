@@ -27,7 +27,9 @@ const postSlice = createSlice({
     });
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.ownPost = action.payload;
+      state.ownPost = action.payload.sort(
+        (p1, p2) => new Date(p2.createdAt) - new Date(p1.createdAt)
+      );
       state.error = "";
     });
     builder.addCase(fetchPosts.rejected, (state, action) => {

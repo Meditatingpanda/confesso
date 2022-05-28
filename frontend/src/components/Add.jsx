@@ -48,7 +48,11 @@ const Add = () => {
     console.log(avatarFile);
     const { data, error } = await supabase.storage
       .from("confesso-storage")
-      .upload(avatarFile.name, avatarFile);   
+      .upload(avatarFile.name, avatarFile);
+      if(error){
+        setImage(null)
+      }  
+      console.log(data,error);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -12,6 +12,8 @@ import { fetchUser } from "../features/profileSlice";
 import { fetchPosts } from "../features/postSlice";
 import { fetchTimelinePosts } from "../features/timelineSlice";
 import { Skeleton } from "@mui/material";
+import List from "../components/List";
+import ListPeople from "../components/List";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -76,10 +78,10 @@ function Profile() {
                 <Feed profileFeed={true} />
               </TabPanel>
               <TabPanel value={value} index={1}>
-                followers
+              <ListPeople/>
               </TabPanel>
               <TabPanel value={value} index={2}>
-                followings
+               <ListPeople/>
               </TabPanel>
             </Box>
           </Box>
