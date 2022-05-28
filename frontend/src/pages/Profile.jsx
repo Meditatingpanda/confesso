@@ -10,9 +10,6 @@ import Sidebar from "../components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../features/profileSlice";
 import { fetchPosts } from "../features/postSlice";
-import { fetchTimelinePosts } from "../features/timelineSlice";
-import { Skeleton } from "@mui/material";
-import List from "../components/List";
 import ListPeople from "../components/List";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,7 +41,6 @@ function Profile() {
     dispacth(fetchPosts(params.username));
   }, []);
 
-  const state = useSelector((state) => state.user);
   const posts = useSelector((state) => state.post.ownPost);
   const handleChange = (event, newValue) => {
     setValue(newValue);

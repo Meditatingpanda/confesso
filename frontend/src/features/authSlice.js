@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../helpers/baseUrl";
 const state = {
   user: JSON.parse(localStorage.getItem("user")) || null,
   isFetching: false,
@@ -10,7 +11,7 @@ const state = {
 export const loginStart = createAsyncThunk(
   "auth/loginStart",
   async (credential) => {
-    const res = await axios.post("/auth/login", {
+    const res = await axios.post(`${api}/auth/login`, {
       email: credential.email,
       password: credential.password,
     });
@@ -20,7 +21,7 @@ export const loginStart = createAsyncThunk(
 export const registerStart = createAsyncThunk(
   "auth/registerStart",
   async (credential) => {
-    const res = await axios.post("/auth/register", {
+    const res = await axios.post(`${api}/auth/register`, {
       username: credential.username,
       email: credential.email,
       password: credential.password,

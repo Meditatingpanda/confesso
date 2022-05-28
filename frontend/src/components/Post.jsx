@@ -14,6 +14,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
+import api from '../helpers/baseUrl'
 const Post = ({ desc, img, likes, _id }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes.length);
@@ -23,7 +24,7 @@ const Post = ({ desc, img, likes, _id }) => {
   }, [user._id, likes]);
 
   const handleLikes = async () => {
-    const res = await axios.put(`/posts/${_id}/like`, {
+    const res = await axios.put(`${api}/posts/${_id}/like`, {
       userId: user._id,
     });
     setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);

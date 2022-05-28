@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../helpers/baseUrl";
 const state = {
   isLoading: false,
   ownPost: [],
@@ -9,7 +10,7 @@ const state = {
 export const fetchPosts = createAsyncThunk(
   "ownPost/fetchPosts",
   async (user) => {
-    const res = await axios.get(`/posts/`, {
+    const res = await axios.get(`${api}/posts/`, {
       params: {
         username: user,
       },

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import api from "../helpers/baseUrl";
 const state = {
   isLoading: false,
   posts: [],
@@ -9,7 +10,7 @@ const state = {
 export const fetchTimelinePosts = createAsyncThunk(
   "timeline/fetchPosts",
   async (user) => {
-    const res = await axios.get("/posts/timeline/all", {
+    const res = await axios.get(`${api}/posts/timeline/all`, {
       params: {
         userId: user,
       },

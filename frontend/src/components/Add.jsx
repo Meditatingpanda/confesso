@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { Alert } from "@mui/material";
 import supabase from "../helpers/connectBucket";
 import axios from "axios";
-
+import api from '../helpers/baseUrl'
 // Create a single supabase client for interacting with your database
 
 const SytledModal = styled(Modal)({
@@ -57,7 +57,7 @@ const Add = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/posts/", postData);
+      await axios.post(`${api}/posts/`, postData);
       setOpen(false);
     } catch (error) {
       console.log(error);

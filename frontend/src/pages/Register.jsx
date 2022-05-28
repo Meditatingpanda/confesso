@@ -4,12 +4,10 @@ import { Button } from "@mui/material";
 import { TextField } from "@mui/material";
 import { Alert } from "@mui/material";
 import { CircularProgress } from "@mui/material";
-import { LinearProgress } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { registerStart } from "../features/authSlice";
 
@@ -20,7 +18,7 @@ function Register() {
     password: "",
     password1: "",
   });
-  const navigate = useNavigate();
+
   const onChange = (e) => {
     setsignUp({ ...signUp, [e.target.name]: e.target.value });
   };

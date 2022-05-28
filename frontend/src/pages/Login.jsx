@@ -5,15 +5,13 @@ import { TextField } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { useRef } from "react";
+
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginStart } from "../features/authSlice";
 import { Alert } from "@mui/material";
-import { LinearProgress } from "@mui/material";
 import { CircularProgress } from "@mui/material";
-import { Navigate } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 
 function Login() {
   const [login, setLogin] = useState({
@@ -26,7 +24,6 @@ function Login() {
   };
   const state = useSelector((state) => state.auth);
   const Dispatch = useDispatch();
-  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     setErr(false);
