@@ -10,15 +10,50 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Add as AddIcon, Image } from "@mui/icons-material";
 import { Box } from "@mui/system";
 import { useSelector } from "react-redux";
 import { Alert } from "@mui/material";
-import supabase from "../helpers/connectBucket";
 import axios from "axios";
-import api from '../helpers/baseUrl'
+import api from "../helpers/baseUrl";
+import storage from "../helpers/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { CircularProgress } from "@mui/material";
+import { useEffect } from "react";
 // Create a single supabase client for interacting with your database
+function CircularProgressWithLabel(props) {
+  return (
+    <Box sx={{ position: "relative", display: "inline-flex" }}>
+      <CircularProgress variant="determinate" {...props} />
+      <Box
+        sx={{
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          position: "absolute",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant="caption" component="div" color="text.secondary">
+          {`${Math.round(props.value)}%`}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
 
+CircularProgressWithLabel.propTypes = {
+  /**
+   * The value of the progress indicator for the determinate variant.
+   * Value between 0 and 100.
+   * @default 0
+   */
+  value: PropTypes.number.isRequired,
+};
 const SytledModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -36,31 +71,56 @@ const Add = () => {
   const [open, setOpen] = useState(false);
   const user = useSelector((state) => state.auth.user);
   const [image, setImage] = useState(null);
+  const [percent, setPercent] = useState(0);
   const [postData, setPostData] = useState({
     userId: user._id,
     desc: "",
-    img: "https://wallpaperaccess.com/full/36626.jpg",
+    img: "",
   });
 
   const handleImageUpload = async (e) => {
     setImage(e.target.files[0]);
-    const avatarFile = e.target.files[0];
-    console.log(avatarFile);
-    const { data, error } = await supabase.storage
-      .from("confesso-storage")
-      .upload(avatarFile.name, avatarFile);
-      if(error){
-        setImage(null)
-      }  
-      console.log(data,error);
+    const file = e.target.files[0];
+    if (!file) {
+      alert("Please choose a file first!");
+    }
+
+    const storageRef = ref(storage, `/files/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+
+        // update progress
+        setPercent(percent);
+        console.log(percent);
+      },
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          setPostData({ ...postData, img: url });
+        });
+      }
+    );
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post(`${api}/posts/`, postData);
-      setOpen(false);
-    } catch (error) {
-      console.log(error);
+    if (!postData.img.length) {
+      alert("Please wait for the upload to finish");
+    } else {
+      try {
+        console.log(postData);
+        await axios.post(`${api}/posts/`, postData);
+        setOpen(false);
+         window.location.reload();
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -118,10 +178,18 @@ const Add = () => {
             {!image ? (
               <Button component="label" startIcon={<Image color="secondary" />}>
                 Add Image
-                <input type="file" hidden onChange={handleImageUpload} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  onChange={handleImageUpload}
+                />
               </Button>
             ) : (
-              <Alert severity="success">Image Added</Alert>
+              <>
+                <Alert severity="success">Image Added</Alert>
+                <CircularProgressWithLabel value={percent} />
+              </>
             )}
           </Stack>
           <Box>

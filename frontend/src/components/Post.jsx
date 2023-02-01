@@ -14,14 +14,29 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
-import api from '../helpers/baseUrl'
-const Post = ({ desc, img, likes, _id }) => {
+import api from "../helpers/baseUrl";
+import { useNavigate } from "react-router-dom";
+const Post = ({ desc, img, likes, _id, userId, createdAt }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(likes.length);
+  const [postUserData, setPostUserData] = useState({});
   const user = useSelector((state) => state.auth.user);
+  const navigate = useNavigate();
   useEffect(() => {
     setIsLiked(likes.includes(user._id));
   }, [user._id, likes]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(`${api}/users/`, {
+        params: {
+          userId,
+        },
+      });
+
+      setPostUserData(res.data);
+    };
+    fetchData();
+  }, []);
 
   const handleLikes = async () => {
     const res = await axios.put(`${api}/posts/${_id}/like`, {
@@ -35,9 +50,10 @@ const Post = ({ desc, img, likes, _id }) => {
       <CardHeader
         avatar={
           <Avatar
-            src="https://avatars.githubusercontent.com/u/83230804?v=4"
-            sx={{ bgcolor: "red" }}
-            aria-label="recipe"
+            src={postUserData.profilePicture}
+            sx={{ bgcolor: "red", cursor: "pointer" }}
+            onClick={() => navigate(`/profile/${postUserData.username}`)}
+            aria-label="profile picture"
           />
         }
         action={
@@ -45,8 +61,8 @@ const Post = ({ desc, img, likes, _id }) => {
             <MoreVert />
           </IconButton>
         }
-        title="Gyana Ranjan Panda"
-        subheader="September 14, 2022"
+        title={postUserData.username}
+        subheader={new Date(createdAt).toLocaleDateString()}
       />
       <CardMedia component="img" height="20%" image={img} alt="post image" />
       <CardContent>
