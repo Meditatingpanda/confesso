@@ -1,2 +1,2 @@
-const api='https://confesso.herokuapp.com/api'
+const api='https://confesso.vercel.app/api'
 export default api;

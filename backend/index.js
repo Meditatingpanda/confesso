@@ -7,10 +7,12 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const errorHandler = require("./middlewares/errorMiddleware");
 const connectDb = require("./config/db");
-let cors=require('cors');
+let cors = require('cors');
 connectDb();
 //middleware
-app.use(cors());
+app.use(cors(({
+  origin: "http://localhost:3000"
+})));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
