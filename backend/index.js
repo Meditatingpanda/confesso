@@ -11,7 +11,7 @@ let cors = require('cors');
 connectDb();
 //middleware
 app.use(cors(({
-  origin: "https://confesso-2.web.app/"
+  origin: "https://confesso-2.web.app"
 })));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
